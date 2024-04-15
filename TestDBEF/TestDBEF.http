@@ -1,0 +1,6 @@
+@TestDBEF_HostAddress = http://localhost:5001
+
+GET {{TestDBEF_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
