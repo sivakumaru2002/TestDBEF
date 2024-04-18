@@ -20,7 +20,7 @@ namespace TestDBEF.Repository.Implementation
 
         public async Task<List<Product>> GetAllProduct()
         {
-            List<Product> product = _DbContext.Product.ToList();
+            List<Product> product = await _DbContext.Product.ToListAsync();
             return product;
         }
 
@@ -81,6 +81,32 @@ namespace TestDBEF.Repository.Implementation
 
 
             return productNames;
+        }
+
+        public async Task<Product> CreateProduct(Product product)
+        {
+             _DbContext.Product.Add(product);
+            await _DbContext.SaveChangesAsync();
+            return product;
+        }
+
+        public async Task<Product> DeleteProduct(Product product)
+        {
+            _DbContext.Product.Remove(product);
+            await _DbContext.SaveChangesAsync();
+            return product;
+        }
+
+        public async Task<Product> GetProductById(Guid id)
+        {
+            return await _DbContext.Product.FindAsync(id);
+        }
+
+        public async Task<Product> UpdateProduct(Product product)
+        {
+            _DbContext.Product.Update(product);
+            await _DbContext.SaveChangesAsync();
+            return product;
         }
     }
 }

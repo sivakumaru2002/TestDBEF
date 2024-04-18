@@ -108,5 +108,25 @@ namespace TestDBEF.Service.Implementation
             }
             return products;
         }
+        public async Task<Product> CreateProduct(Product product)
+        {
+            product.product_id = Guid.NewGuid();
+            Product product1 =await _controllerRepository.CreateProduct(product);
+            return product1;
+        }
+        public async Task<Product> GetProductByID(Guid id)
+        {
+            return await _controllerRepository.GetProductById(id);
+        }
+        public async Task<Product> DeleteProduct(Guid Id)
+        {
+            Product product1 = await GetProductByID(Id);
+            Product product = await _controllerRepository.DeleteProduct(product1);
+            return product;
+        }
+        public async Task<Product> UpdateProduct(Product product)
+        {
+                return await _controllerRepository.UpdateProduct(product);
+        }
     }
 }

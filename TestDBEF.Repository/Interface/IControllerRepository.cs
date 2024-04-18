@@ -12,5 +12,9 @@ namespace TestDBEF.Repository.Interface
         Task<List<Customer>> GetAllCustomer();
         Task<List<Product>> GetAllProduct();
         Task<List<Orders>> GetAllOrder();
+        Task<Product> CreateProduct(Product product);
+        Task<Product> DeleteProduct(Product product);
+        Task<Product> GetProductById(Guid id);
+        Task<Product> UpdateProduct(Product product);
     }
 }

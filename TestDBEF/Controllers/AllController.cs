@@ -12,15 +12,12 @@ namespace TestDBEF.Controllers
     [ApiController]
     public class AllController : ControllerBase
     {
-        private readonly AppDbContext _DbContext;
+
         private readonly IControllerService _ControllerService;
-        private readonly ICacheProvider _cacheProvider;
-        private readonly IMemoryCache memoryCache;
-        public AllController(AppDbContext dbContext,ICacheProvider cacheProvider,IMemoryCache memory,IControllerService controllerService)
+
+        public AllController(IControllerService controllerService)
         {
-            _DbContext = dbContext;           
-            _cacheProvider = cacheProvider;
-            memoryCache = memory;
+
             _ControllerService = controllerService;
         }
         [HttpGet]
@@ -36,6 +33,40 @@ namespace TestDBEF.Controllers
         {
             List<Product> product = await _ControllerService.GetAllProduct();
             return Ok(product);
+        }
+        [HttpGet]
+        [Route("/GetProductById")]
+        public async Task<IActionResult> GetProductbyId(Guid id)
+        {
+            if(id.ToString()== "00000000-0000-0000-0000-000000000000") return NotFound(id);
+            var product= await _ControllerService.GetProductByID(id);
+            if (product == null) { return NotFound(id); }
+            return Ok(product);
+        }
+        [HttpPost]
+        [Route ("/CreateProduct")]
+        public async Task<IActionResult> CreateProduct(Product product)
+        {
+           Product products= await _ControllerService.CreateProduct(product);
+            if (products == null) return BadRequest(products);
+            return Ok(products);
+        }
+
+        [HttpDelete]
+        [Route("/DeleteProduct")]
+        public async Task<IActionResult> DeleteProduct(Guid productid)
+        {
+            Product product =await  _ControllerService.DeleteProduct(productid);
+            if (product == null) return BadRequest(productid);
+            return Ok(product);
+        }
+        [HttpPut]
+        [Route("/UpdateProduct")]
+        public async Task<IActionResult> UpdateProduct(Product product)
+        {
+            Product product1 = await _ControllerService.UpdateProduct(product);
+            if(product1 == null) return BadRequest(product);
+            return Ok(product1);
         }
         [HttpGet]
         [Route("/GetAllOrder")]

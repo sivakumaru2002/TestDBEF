@@ -1,11 +1,31 @@
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.VisualStudio.TestPlatform.TestHost;
 using TestDBEF.Controllers;
 using TestDBEF.Service.Interface;
 
 namespace TestDBEF.Service.xUnitTest1
 {
-    public class UnitTest1
+    public class UnitTest1: IClassFixture<WebApplicationFactory<Program>>
     {
+        private readonly WebApplicationFactory<Program> _factory;
+        public UnitTest1(WebApplicationFactory<Program> factory)
+        {
+            _factory = factory;
+        }
+
+        [Theory]
+        [InlineData("https://localhost:44378/api/GetAllCustomer")]
+        public async Task Get_EndpointsReturnSuccessAndCorrectContentType(string url)
+        {
+            var client = _factory.CreateClient();
+            var response = await client.GetAsync(url);
+            var result = response.IsSuccessStatusCode; 
+            Assert.False(result);
+        }
+
+       
         [Fact]
         public void Test1()
         {
@@ -38,6 +58,6 @@ namespace TestDBEF.Service.xUnitTest1
         {
             Assert.Equal(name1, name2);
         }
-
+     
     }
 }
