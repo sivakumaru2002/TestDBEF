@@ -47,6 +47,16 @@ namespace TestDBEF.Service.xUnitTest1
         }
 
         [Fact]
+        public async void CreateProductByIdService2()
+        {
+            Guid userid = Guid.Parse("00000000-0000-0000-0000-000000000000");
+            var prod = new Product();
+            _controllerService.Setup(x => x.GetProductByID(userid)).ReturnsAsync(prod);
+            Product productdata =await _controllerService.Object.GetProductByID(userid);
+            Assert.Equal(prod, productdata);
+        }
+
+        [Fact]
         public void DeleteProductByIDService()
         {
             Guid userid = Guid.NewGuid();

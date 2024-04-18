@@ -43,6 +43,7 @@ namespace TestDBEF.Service.Implementation
                 };
                 _memoryCache.Set("Product-All", product, cacheOptions);
             }
+            
             return product;
         }
 
@@ -122,6 +123,15 @@ namespace TestDBEF.Service.Implementation
         {
             Product product1 = await GetProductByID(Id);
             Product product = await _controllerRepository.DeleteProduct(product1);
+            if (product == null)
+            {
+                Product prod = new Product();
+                prod.product_id = Guid.Parse("00000000-0000-0000-0000-000000000000");
+                prod.quantity = 0;
+                prod.price = 0;
+                prod.productname = null;
+                return prod;
+            }
             return product;
         }
         public async Task<Product> UpdateProduct(Product product)

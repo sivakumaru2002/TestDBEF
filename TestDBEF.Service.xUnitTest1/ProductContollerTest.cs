@@ -72,9 +72,8 @@ namespace TestDBEF.Service.xUnitTest1
         public void DeleteProductByID()
         {
             Guid guid = Guid.NewGuid();
-            var mock = new Mock<IControllerService>();
-            mock.Setup(x => x.DeleteProduct(It.IsAny<Guid>())).ReturnsAsync(new Product());
-            var allController = new AllController(mock.Object);
+            _controllerService.Setup(x => x.DeleteProduct(It.IsAny<Guid>())).ReturnsAsync(new Product());
+            var allController = new AllController(_controllerService.Object);
             var productdata = allController.DeleteProduct(guid);
             Assert.IsType<OkObjectResult>(productdata.Result as OkObjectResult);
         }
@@ -88,9 +87,8 @@ namespace TestDBEF.Service.xUnitTest1
             product.price = price;
             product.quantity = quantity;
             product.productname = name;
-            var mock = new Mock<IControllerService>();
-            mock.Setup(x => x.UpdateProduct(It.IsAny<Product>())).ReturnsAsync(product);
-            var allController = new AllController(mock.Object);
+            _controllerService.Setup(x => x.UpdateProduct(It.IsAny<Product>())).ReturnsAsync(product);
+            var allController = new AllController(_controllerService.Object);
             var productdata = allController.UpdateProduct(product);
             Assert.IsType<OkObjectResult>(productdata.Result as OkObjectResult);
 
