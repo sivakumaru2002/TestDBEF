@@ -126,10 +126,6 @@ namespace TestDBEF.Service.Implementation
             if (product == null)
             {
                 Product prod = new Product();
-                prod.product_id = Guid.Parse("00000000-0000-0000-0000-000000000000");
-                prod.quantity = 0;
-                prod.price = 0;
-                prod.productname = null;
                 return prod;
             }
             return product;

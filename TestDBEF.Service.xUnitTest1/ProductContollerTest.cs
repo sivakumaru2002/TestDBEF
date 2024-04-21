@@ -1,7 +1,10 @@
 ﻿using Castle.Components.DictionaryAdapter.Xml;
+using Castle.Core.Logging;
 using FakeItEasy;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Logging;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -83,7 +86,6 @@ namespace TestDBEF.Service.xUnitTest1
         public void CheckUpdateProductController(string name, int quantity, int price)
         {
             Product product = new Product();
-            product.product_id= Guid.NewGuid();
             product.price = price;
             product.quantity = quantity;
             product.productname = name;
@@ -91,7 +93,6 @@ namespace TestDBEF.Service.xUnitTest1
             var allController = new AllController(_controllerService.Object);
             var productdata = allController.UpdateProduct(product);
             Assert.IsType<OkObjectResult>(productdata.Result as OkObjectResult);
-
         }
 
     }
